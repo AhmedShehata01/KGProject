@@ -1,0 +1,61 @@
+@import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+@import './table-theme.css';
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  font-size: 15px;
+}
+
+/* RTL/LTR direction-aware global styles for sidebar, table, navbar, and pagination */
+
+/* Sidebar icon and text spacing */
+[dir="rtl"] .sidebar-list .me-2 { margin-left: 0.5rem !important; margin-right: 0 !important; }
+[dir="ltr"] .sidebar-list .me-2 { margin-right: 0.5rem !important; margin-left: 0 !important; }
+
+/* Sidebar dropdown arrow direction */
+[dir="rtl"] .sidebar-dropdown-toggle .bi-chevron-right { transform: rotate(180deg); }
+
+/* Table and pagination alignment */
+[dir="rtl"] th, [dir="rtl"] td { text-align: right; }
+[dir="ltr"] th, [dir="ltr"] td { text-align: left; }
+[dir="rtl"] .pagination-container { flex-direction: row-reverse; }
+[dir="rtl"] .pagination { direction: rtl; }
+[dir="ltr"] .pagination { direction: ltr; }
+
+/* Navbar margin utilities */
+[dir="rtl"] .navbar .ms-2 { margin-left: 0 !important; margin-right: 0.5rem !important; }
+[dir="ltr"] .navbar .ms-2 { margin-left: 0.5rem !important; margin-right: 0 !important; }
+
+/* General gap utility for RTL/LTR if needed */
+[dir="rtl"] .gap-2 { gap: 0.5rem 0 !important; }
+[dir="ltr"] .gap-2 { gap: 0 0.5rem !important; }
+
+[dir="rtl"] .sidebar-list {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+[dir="rtl"] .sidebar-list .nav-link,
+[dir="rtl"] .sidebar-list .dropdown-item {
+  justify-content: flex-end;
+  text-align: end;
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  padding-right: 0.5rem !important;
+  padding-left: 0 !important;
+}
+[dir="rtl"] .sidebar-dropdown-menu {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+

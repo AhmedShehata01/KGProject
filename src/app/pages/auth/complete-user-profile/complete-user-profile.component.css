@@ -1,0 +1,183 @@
+/* Glassmorphism card style */
+.profile-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+}
+.profile-form.glass-card {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: none;
+  width: 80%;
+  margin: 2rem auto;
+  animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.profile-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2d3a4b;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.form-group {
+  margin-bottom: 1.1rem;
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: #7f5af0;
+  letter-spacing: 0.02em;
+  font-size: 1.04rem;
+}
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="file"],
+.form-group textarea {
+  border-radius: 12px;
+  border: 1.5px solid #bdbdbd;
+  padding: 0.7rem 1rem;
+  font-size: 1.08rem;
+  background: rgba(255,255,255,0.85);
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(127,90,240,0.06);
+  outline: none;
+}
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="file"]:focus,
+.form-group textarea:focus {
+  border-color: #7f5af0;
+  box-shadow: 0 0 0 2px #7f5af033;
+  background: #fff;
+}
+.form-group input[type="file"] {
+  padding: 0.5rem 1rem;
+  background: rgba(127,90,240,0.04);
+  border-style: dashed;
+  cursor: pointer;
+}
+.form-group input.invalid,
+.form-group textarea.invalid {
+  border-color: #e57373;
+  background: rgba(255, 235, 238, 0.7);
+}
+.form-group textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+.form-group .file-name {
+  font-size: 0.97em;
+  color: #607d8b;
+  margin-top: 0.2rem;
+}
+.form-group.agreement {
+  flex-direction: row;
+  align-items: center;
+}
+.form-group.agreement label {
+  margin-bottom: 0;
+  font-size: 0.98em;
+}
+.form-actions {
+  text-align: center;
+  margin-top: 1.2rem;
+}
+.form-actions button {
+  background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.form-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.form-actions a.button-link {
+  display: inline-block;
+  background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  text-align: center;
+}
+.form-actions a.button-link:disabled, .form-actions a.button-link[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.form-status {
+  margin-top: 1rem;
+  text-align: center;
+}
+.form-status .success {
+  color: #43a047;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.form-status .error {
+  color: #e53935;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.error {
+  color: #e53935;
+  font-size: 0.97em;
+  margin-top: 0.2rem;
+}
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.2rem;
+}
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 4px solid #e0eafc;
+  border-top: 4px solid #6a82fb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.form-row {
+  display: flex;
+  gap: 2rem;
+}
+.form-row .form-group {
+  flex: 1 1 0;
+  min-width: 0;
+}
+@media (max-width: 900px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

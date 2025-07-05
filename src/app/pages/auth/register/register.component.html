@@ -1,0 +1,51 @@
+<div class="login-bg d-flex align-items-center justify-content-center min-vh-50">
+  <div class="glass-card p-4 w-100" style="max-width: 370px;">
+    <h2 class="text-center mb-4 fw-bold">Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-3">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input type="text" class="form-control rounded-pill px-3 py-2" id="fullName" formControlName="userName" placeholder="Enter your name" />
+        <div class="text-danger small mt-1" *ngIf="registerForm.get('userName')?.touched && registerForm.get('userName')?.invalid">
+          <div *ngIf="registerForm.get('userName')?.errors?.['required']">Full Name is required</div>
+          <div *ngIf="registerForm.get('userName')?.errors?.['minlength']">Full Name must be at least 3 characters</div>
+          <div *ngIf="registerForm.get('userName')?.errors?.['maxlength']">Full Name must be less than 50 characters</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control rounded-pill px-3 py-2" id="email" formControlName="email" placeholder="Enter email" />
+        <div class="text-danger small mt-1" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+          <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</div>
+          <div *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control rounded-pill px-3 py-2" id="password" formControlName="password" placeholder="Password" />
+        <div class="text-danger small mt-1" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+          <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</div>
+          <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</div>
+          <div *ngIf="registerForm.get('password')?.errors?.['maxlength']">Password must be less than 50 characters</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control rounded-pill px-3 py-2" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password" />
+        <div class="text-danger small mt-1" *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid">
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required</div>
+          <div *ngIf="registerForm.get('confirmPassword')?.errors?.['mismatch']">Passwords do not match</div>
+        </div>
+      </div>
+      <!-- All API feedback is now via ToastService. Only validation errors remain inline. -->
+      <div class="d-grid mb-2">
+        <button type="submit" class="btn btn-success rounded-pill fw-semibold" [disabled]="registerForm.invalid || loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          Register
+        </button>
+      </div>
+      <div class="text-center">
+        <a routerLink="/auth/login" class="small">Already have an account? Login</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,275 @@
+/* Only keep component-specific styles here. All shared table, button, and pagination styles are now in table-theme.css */
+
+/* Spinner size adjustment */
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Alert styles */
+.alert-info {
+  background: rgba(44,182,125,0.08);
+  color: #2cb67d;
+  border: none;
+  border-radius: 0.85rem;
+}
+.alert-danger {
+  border-radius: 0.85rem;
+}
+
+/* Modal dialog width */
+.modal-dialog {
+  max-width: 80vw !important;
+  width: 80vw !important;
+}
+
+/* Pagination controls styles */
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+.pagination {
+  --bs-pagination-bg: transparent;
+  --bs-pagination-border-radius: 1.5rem;
+  --bs-pagination-color: #2cb67d;
+  --bs-pagination-hover-color: #fff;
+  --bs-pagination-hover-bg: #2cb67d;
+  --bs-pagination-active-bg: #7f5af0;
+  --bs-pagination-active-color: #fff;
+  --bs-pagination-border-color: #2cb67d;
+  --bs-pagination-hover-border-color: #7f5af0;
+  --bs-pagination-active-border-color: #7f5af0;
+  font-size: 1rem;
+  box-shadow: none;
+}
+.pagination .page-link {
+  border-radius: 1.5rem !important;
+  border: 1.5px solid #2cb67d;
+  color: #2cb67d;
+  background: transparent;
+  margin: 0 2px;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.pagination .page-link:hover, .pagination .page-item.active .page-link {
+  background: linear-gradient(90deg, #2cb67d 0%, #7f5af0 100%);
+  color: #fff;
+  border-color: #7f5af0;
+}
+.pagination .page-item.disabled .page-link {
+  color: #aaa;
+  background: #f8f9fa;
+  border-color: #eee;
+}
+
+/** Remove underline from sort header buttons and ensure white color **/
+.sort-header,
+.sort-header.btn-link {
+  text-decoration: none !important;
+  color: #fff !important;
+  background: none;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.sort-header.btn-link:hover,
+.sort-header.btn-link:focus,
+.sort-header:focus,
+.sort-header:active,
+.sort-header:hover {
+  text-decoration: none !important;
+  color: #fff !important;
+  background: none;
+  box-shadow: none !important;
+}
+.sort-header span,
+.sort-header .sort-icons i {
+  text-decoration: none !important;
+}
+th .btn-link {
+  text-decoration: none !important;
+  color: #fff !important;
+}
+th .btn-link:hover,
+th .btn-link:focus {
+  text-decoration: none !important;
+  color: #fff !important;
+  background: none;
+  box-shadow: none;
+}
+
+@media (max-width: 1200px) {
+  .table-responsive {
+    font-size: 0.95rem;
+  }
+  .sort-header span {
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 992px) {
+  .table-responsive {
+    font-size: 0.92rem;
+  }
+  .sort-header span {
+    font-size: 0.92rem;
+  }
+  .pagination-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.9rem;
+  }
+  .sort-header span {
+    font-size: 0.9rem;
+  }
+  .pagination-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .d-flex.flex-wrap.align-items-center.justify-content-between.mb-3.gap-2 {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+  }
+  .top-controls-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    text-align: center;
+  }
+  .top-controls-group {
+    width: 100%;
+    justify-content: center !important;
+    text-align: center;
+  }
+  .top-controls-group label,
+  .top-controls-group select,
+  .top-controls-group span {
+    display: inline-block;
+    text-align: center;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .top-controls-group input.form-control {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin-bottom: 0.5rem;
+  }
+}
+@media (max-width: 576px) {
+  .table-responsive {
+    font-size: 0.85rem;
+  }
+  .sort-header span {
+    font-size: 0.85rem;
+  }
+  .pagination-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .d-flex.flex-wrap.align-items-center.justify-content-between.mb-3.gap-2 {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+  }
+}
+
+/* Modal header direction-aware alignment for LTR/RTL */
+:host ::ng-deep .modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-direction: row !important;
+  direction: ltr !important;
+  width: 100% !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header,
+[dir="rtl"] .modal-header {
+  flex-direction: row !important;
+  direction: rtl !important;
+  justify-content: space-between !important;
+}
+:host-context([dir="ltr"]) ::ng-deep .modal-header,
+[dir="ltr"] .modal-header {
+  flex-direction: row !important;
+  direction: ltr !important;
+  justify-content: space-between !important;
+}
+:host ::ng-deep .modal-title,
+:host ::ng-deep .btn-close {
+  display: flex !important;
+  align-items: center !important;
+}
+:host ::ng-deep .modal-title {
+  order: 1;
+  text-align: left !important;
+  margin: 0 !important;
+}
+:host ::ng-deep .btn-close {
+  order: 2;
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header > .modal-title,
+[dir="rtl"] .modal-header > .modal-title {
+  order: 2 !important;
+  text-align: right !important;
+  margin: 0 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header > .btn-close,
+[dir="rtl"] .modal-header > .btn-close {
+  order: 1 !important;
+  margin-right: 0.5rem !important;
+  margin-left: 0 !important;
+}
+
+.table td.text-center[style*="min-width: 80px"] {
+  min-width: 64px !important;
+  width: 64px !important;
+  padding-left: 0.13rem !important;
+  padding-right: 0.13rem !important;
+}
+.btn-group-xs .btn-xs {
+  min-width: 32px !important;
+  height: 32px !important;
+  font-size: 1.08rem !important;
+  padding: 0.18rem 0.32rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.35rem;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-group-xs .btn-xs i {
+  pointer-events: none;
+}
+.btn-group-xs .btn-xs:hover, .btn-group-xs .btn-xs:focus {
+  background: #e9ecef;
+  color: #0d6efd;
+  border-color: #0d6efd;
+}
+.btn-group-xs .btn-xs:active {
+  background: #d0e2ff;
+  color: #0a58ca;
+}
+.btn-group-xs .btn-xs .bi-trash {
+  color: #dc3545;
+}
+.btn-group-xs .btn-xs:hover .bi-trash, .btn-group-xs .btn-xs:focus .bi-trash {
+  color: #a71d2a;
+}
+.modal-header .btn-close {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+[dir="rtl"] .modal-header .btn-close {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}

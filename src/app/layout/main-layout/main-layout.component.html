@@ -1,0 +1,31 @@
+<div class="main-layout-bg min-vh-100">
+  <app-navbar></app-navbar>
+  <!-- Sidebar Toggle Button (visible on mobile) -->
+  <button class="btn btn-outline-light d-md-none me-2 position-absolute" style="top: 1rem; left: 1rem; z-index: 1100;" type="button" (click)="toggleSidebar()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <!-- Sidebar Toggle Button (Bootstrap) -->
+  <button class="btn btn-outline-light d-md-none me-2 position-absolute" style="top: 1rem; left: 1rem; z-index: 1100;" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <!-- Bootstrap Offcanvas Sidebar -->
+  <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Menu</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+      <app-sidebar></app-sidebar>
+    </div>
+  </div>
+  <div class="d-flex">
+    <!-- Desktop Sidebar -->
+    <div class="sidebar-area d-none d-md-block">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="flex-grow-1 p-4 main-content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <app-toast></app-toast>
+</div>

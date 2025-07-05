@@ -1,0 +1,25 @@
+<div class="login-bg d-flex align-items-center justify-content-center min-vh-50">
+  <div class="glass-card p-4 w-100" style="max-width: 370px;">
+    <h2 class="text-center mb-4 fw-bold">Enter OTP</h2>
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-3">
+        <label class="form-label">OTP Code</label>
+        <div class="input-group">
+          <input type="text" class="form-control rounded-pill px-3 py-2 shadow-sm border-0 modern-otp-input" formControlName="code" maxlength="8" autocomplete="one-time-code" placeholder="Enter OTP" />
+          <span class="input-group-text bg-transparent border-0"><i class="bi bi-shield-lock text-primary"></i></span>
+        </div>
+        <div class="text-danger small mt-1" *ngIf="otpForm.get('code')?.touched && otpForm.get('code')?.invalid">
+          <div *ngIf="otpForm.get('code')?.errors?.['required']">OTP is required</div>
+          <div *ngIf="otpForm.get('code')?.errors?.['minlength']">OTP must be at least 4 digits</div>
+          <div *ngIf="otpForm.get('code')?.errors?.['maxlength']">OTP must be less than 8 digits</div>
+        </div>
+      </div>
+      <button class="btn btn-primary w-100 rounded-pill fw-semibold mb-2" type="submit" [disabled]="otpForm.invalid || loading">
+        Verify OTP
+      </button>
+      <div class="text-center mt-2">
+        <button type="button" class="btn btn-link p-0 small" (click)="goToLogin()" style="text-decoration:underline;cursor:pointer;">Back to Login</button>
+      </div>
+    </form>
+  </div>
+</div>

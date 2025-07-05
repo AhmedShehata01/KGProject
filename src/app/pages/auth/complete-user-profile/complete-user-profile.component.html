@@ -1,0 +1,334 @@
+<div class="profile-container">
+  <!-- Show form for Draft or Rejected status -->
+  <form
+    *ngIf="
+      !statusLoading &&
+      (profileStatus === 'Draft' ||
+        profileStatus === 'draft' ||
+        profileStatus === 'rejected' ||
+        profileStatus === 'Rejected' ||
+        !profileStatus)
+    "
+    [formGroup]="profileForm"
+    (ngSubmit)="submit()"
+    novalidate
+    class="profile-form glass-card"
+  >
+    <h2
+      *ngIf="
+        profileStatus === 'rejected' || profileStatus === 'Rejected'
+      "
+    >
+      Profile Rejected
+    </h2>
+    <h2
+      *ngIf="
+        !(profileStatus === 'rejected' || profileStatus === 'Rejected')
+      "
+    >
+      Complete Your Profile
+    </h2>
+    <div
+      *ngIf="profileStatus === 'rejected' || profileStatus === 'Rejected'"
+      class="rejected-message"
+      style="
+        color: #e53935;
+        margin-bottom: 1rem;
+        text-align: center;
+      "
+    >
+      
+      <ng-container *ngIf="rejectionReason; else noReason">
+        <span
+          style="
+            font-weight: 600;
+            color: #b71c1c;
+            display: block;
+            margin-top: 0.7rem;
+          "
+          >Reason: {{ rejectionReason }}</span
+        >
+      </ng-container>
+      <ng-template #noReason>
+        <span
+          style="
+            display: block;
+            margin-top: 0.7rem;
+            color: #b71c1c;
+          "
+          >No rejection reason provided.</span
+        >
+      </ng-template>
+      You can update your information and resubmit the form for review.
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input
+          id="fullName"
+          type="text"
+          formControlName="fullName"
+          [class.invalid]="submitted && f['fullName'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['fullName'].errors">
+          <span *ngIf="f['fullName'].errors['required']"
+            >Full name is required.</span
+          >
+          <span *ngIf="f['fullName'].errors['minlength']"
+            >At least 3 characters.</span
+          >
+          <span *ngIf="f['fullName'].errors['maxlength']"
+            >Max 50 characters.</span
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="primaryPhone">Primary Phone</label>
+        <input
+          id="primaryPhone"
+          type="text"
+          formControlName="primaryPhone"
+          [class.invalid]="submitted && f['primaryPhone'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['primaryPhone'].errors">
+          <span *ngIf="f['primaryPhone'].errors['required']"
+            >Primary phone is required.</span
+          >
+          <span *ngIf="f['primaryPhone'].errors['pattern']"
+            >Invalid phone number.</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="secondaryPhone1">Secondary Phone 1</label>
+        <input
+          id="secondaryPhone1"
+          type="text"
+          formControlName="secondaryPhone1"
+          [class.invalid]="submitted && f['secondaryPhone1'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['secondaryPhone1'].errors">
+          <span *ngIf="f['secondaryPhone1'].errors['pattern']"
+            >Invalid phone number.</span
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="secondaryPhone2">Secondary Phone 2</label>
+        <input
+          id="secondaryPhone2"
+          type="text"
+          formControlName="secondaryPhone2"
+          [class.invalid]="submitted && f['secondaryPhone2'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['secondaryPhone2'].errors">
+          <span *ngIf="f['secondaryPhone2'].errors['pattern']"
+            >Invalid phone number.</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="birthDate">Birth Date</label>
+        <input
+          id="birthDate"
+          type="date"
+          formControlName="birthDate"
+          [class.invalid]="submitted && f['birthDate'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['birthDate'].errors">
+          <span *ngIf="f['birthDate'].errors['required']"
+            >Birth date is required.</span
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="graduationYear">Graduation Year</label>
+        <input
+          id="graduationYear"
+          type="text"
+          formControlName="graduationYear"
+          maxlength="4"
+          [class.invalid]="submitted && f['graduationYear'].invalid"
+        />
+        <div class="error" *ngIf="submitted && f['graduationYear'].errors">
+          <span *ngIf="f['graduationYear'].errors['required']"
+            >Graduation year is required.</span
+          >
+          <span *ngIf="f['graduationYear'].errors['pattern']"
+            >Enter a valid year (e.g. 2020).</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="personalPhotoPath">Personal Photo</label>
+        <input
+          id="personalPhotoPath"
+          type="file"
+          (change)="onFileChange($event, 'personalPhotoPath')"
+          accept="image/*"
+        />
+        <div class="file-name" *ngIf="f['personalPhotoPath'].value">
+          {{ f["personalPhotoPath"].value }}
+        </div>
+        <div class="error" *ngIf="submitted && f['personalPhotoPath'].errors">
+          <span *ngIf="f['personalPhotoPath'].errors['required']"
+            >Personal photo is required.</span
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="nationalIdFrontPath">National ID Front</label>
+        <input
+          id="nationalIdFrontPath"
+          type="file"
+          (change)="onFileChange($event, 'nationalIdFrontPath')"
+          accept="image/*"
+        />
+        <div class="file-name" *ngIf="f['nationalIdFrontPath'].value">
+          {{ f["nationalIdFrontPath"].value }}
+        </div>
+        <div class="error" *ngIf="submitted && f['nationalIdFrontPath'].errors">
+          <span *ngIf="f['nationalIdFrontPath'].errors['required']"
+            >Front of National ID is required.</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="nationalIdBackPath">National ID Back</label>
+        <input
+          id="nationalIdBackPath"
+          type="file"
+          (change)="onFileChange($event, 'nationalIdBackPath')"
+          accept="image/*"
+        />
+        <div class="file-name" *ngIf="f['nationalIdBackPath'].value">
+          {{ f["nationalIdBackPath"].value }}
+        </div>
+        <div class="error" *ngIf="submitted && f['nationalIdBackPath'].errors">
+          <span *ngIf="f['nationalIdBackPath'].errors['required']"
+            >Back of National ID is required.</span
+          >
+        </div>
+      </div>
+      <div class="form-group agreement" style="align-items: flex-end">
+        <label style="width: 100%">
+          <input type="checkbox" formControlName="agreementAccepted" />
+          I agree to the terms and conditions
+        </label>
+        <div class="error" *ngIf="submitted && f['agreementAccepted'].errors">
+          <span *ngIf="f['agreementAccepted'].errors['required']"
+            >You must accept the agreement.</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group" style="flex: 2">
+        <label for="address">Address</label>
+        <textarea
+          id="address"
+          formControlName="address"
+          [class.invalid]="submitted && f['address'].invalid"
+        ></textarea>
+        <div class="error" *ngIf="submitted && f['address'].errors">
+          <span *ngIf="f['address'].errors['required']"
+            >Address is required.</span
+          >
+          <span *ngIf="f['address'].errors['minlength']"
+            >At least 10 characters.</span
+          >
+          <span *ngIf="f['address'].errors['maxlength']"
+            >Max 100 characters.</span
+          >
+        </div>
+      </div>
+      <div style="flex: 1"></div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" [disabled]="loading || profileForm.invalid">
+        {{ (profileStatus === 'rejected' || profileStatus === 'Rejected') ? 'Resubmit' : 'Submit' }}
+      </button>
+    </div>
+    <div class="form-status">
+      <!-- All API feedback is now via ToastService. Only validation errors remain inline. -->
+      <div class="error" *ngIf="submitted && profileForm.invalid">
+        Please correct the errors above and try again.
+      </div>
+    </div>
+    <div class="loading-spinner" *ngIf="loading">
+      <div class="spinner"></div>
+    </div>
+  </form>
+
+  <div *ngIf="!statusLoading && profileStatus === 'pendingApproval'"
+    class="profile-form glass-card"
+    style="text-align: center; padding: 3rem 2rem"
+  >
+    <h2>Profile Under Review</h2>
+    <p style="font-size: 1.15rem; color: #2d3a4b; margin-top: 1.5rem">
+      You have submitted your profile.<br />Currently your profile is under
+      admin review.
+    </p>
+    <div style="font-size: 2.5rem; margin-top: 2rem; color: #6a82fb">
+      <i class="fas fa-hourglass-half" style="font-size: 3rem"></i>
+    </div>
+  </div>
+
+  <div *ngIf="!statusLoading && profileStatus === 'approved'"
+    class="profile-form glass-card"
+    style="text-align: center; padding: 3rem 2rem"
+  >
+    <h2>Profile Approved!</h2>
+    <p style="font-size: 1.15rem; color: #2d3a4b; margin-top: 1.5rem">
+      Congratulations! Your profile has been approved.<br />You can now access
+      the dashboard and all features.
+    </p>
+    <button
+      (click)="goToLogin()"
+      style="
+        margin-top: 2rem;
+        background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.7rem 2.2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+      "
+    >
+      Go to Login
+    </button>
+  </div>
+
+
+  <div *ngIf="statusLoading" 
+    class="profile-form glass-card"
+    style="text-align: center; padding: 3rem 2rem"
+  >
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+    </div>
+    <p style="margin-top: 1.5rem; color: #2d3a4b">
+      Checking your profile status...
+    </p>
+  </div>
+
+  <div *ngIf="!statusLoading && !profileStatus && errorMsg"
+    class="profile-form glass-card"
+    style="text-align: center; padding: 3rem 2rem"
+  >
+    <h2>Error</h2>
+    <p style="font-size: 1.15rem; color: #e53935; margin-top: 1.5rem">
+      {{ errorMsg }}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="login-bg d-flex align-items-center justify-content-center min-vh-50">
+  <div class="glass-card p-4 w-100" style="max-width: 370px;">
+    <h2 class="text-center mb-4 fw-bold">Sign In</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control rounded-pill px-3 py-2" formControlName="email" />
+        <div class="text-danger small mt-1" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+          <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</div>
+          <div *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control rounded-pill px-3 py-2" formControlName="password" />
+        <div class="text-danger small mt-1" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</div>
+          <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</div>
+          <div *ngIf="loginForm.get('password')?.errors?.['maxlength']">Password must be less than 50 characters</div>
+        </div>
+      </div>
+      <button class="btn btn-primary w-100 rounded-pill fw-semibold mb-2" type="submit" [disabled]="loginForm.invalid">
+        Login
+      </button>
+      <div class="text-center">
+        <a routerLink="/auth/forget-password" class="small">Forgot Password?</a><br />
+        <!-- <a routerLink="/auth/register" class="small">Don't have an account? Register</a> -->
+      </div>
+    </form>
+  </div>
+</div>

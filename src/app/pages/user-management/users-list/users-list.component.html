@@ -1,0 +1,241 @@
+<div class="container py-1">
+  <div class="d-flex flex-wrap align-items-center justify-content-between mb-3 gap-2 top-controls-row">
+    <div class="d-flex align-items-center gap-2 top-controls-group">
+      <button class="btn btn-outline-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#createUserModal" (click)="openCreateUserModal()">
+        <i class="bi bi-plus-circle me-1"></i> {{ 'USER_LIST.CREATE_USER' | translate }}
+      </button>
+    </div>
+    <div class="d-flex align-items-center gap-2 flex-grow-1 justify-content-center top-controls-group">
+      <input type="text" class="form-control w-auto" style="min-width:220px;max-width:320px;" autocomplete="off" [(ngModel)]="searchInput" [placeholder]="'USER_LIST.SEARCH_PLACEHOLDER' | translate">
+      <button class="btn btn-outline-primary btn-sm" type="button" (click)="onSearchClick()">{{ 'USER_LIST.SEARCH' | translate }}</button>
+    </div>
+    <div class="d-flex align-items-center gap-2 top-controls-group">
+      <label for="pageSize" class="me-2 mb-0">{{ 'USER_LIST.SHOW' | translate }}</label>
+      <select id="pageSize" class="form-select d-inline-block w-auto" [(ngModel)]="pageSize" (change)="onPageSizeChange(pageSize)">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+      <span class="ms-2">{{ 'USER_LIST.ENTRIES' | translate }}</span>
+    </div>
+  </div>
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">{{ 'USER_LIST.LOADING' | translate }}</span>
+    </div>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  <div class="table-responsive rounded shadow-sm bg-white">
+    <table *ngIf="!loading && !error && pagedUsers.length" class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th class="text-center">#</th>
+          <th>
+            <button class="btn btn-link p-0 m-0 align-baseline sort-header text-white" (click)="onSortToggle('userName')">
+              <span>{{ 'USER_LIST.NAME' | translate }}</span>
+              <span class="sort-icons ms-1">
+                <i *ngIf="sortBy !== 'userName'" class="bi bi-caret-down-fill text-white-50" style="opacity:0.45;"></i>
+                <i *ngIf="sortBy === 'userName' && sortDirection === 'asc'" class="bi bi-caret-up-fill text-white" style="opacity:1;"></i>
+                <i *ngIf="sortBy === 'userName' && sortDirection === 'desc'" class="bi bi-caret-down-fill text-white" style="opacity:1;"></i>
+              </span>
+            </button>
+          </th>
+          <th>
+            <button class="btn btn-link p-0 m-0 align-baseline sort-header text-white" (click)="onSortToggle('email')">
+              <span>{{ 'USER_LIST.EMAIL' | translate }}</span>
+              <span class="sort-icons ms-1">
+                <i *ngIf="sortBy !== 'email'" class="bi bi-caret-down-fill text-white-50" style="opacity:0.45;"></i>
+                <i *ngIf="sortBy === 'email' && sortDirection === 'asc'" class="bi bi-caret-up-fill text-white" style="opacity:1;"></i>
+                <i *ngIf="sortBy === 'email' && sortDirection === 'desc'" class="bi bi-caret-down-fill text-white" style="opacity:1;"></i>
+              </span>
+            </button>
+          </th>
+          <th class="text-center" style="width: 70px; min-width: 70px;">{{ 'USER_LIST.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of pagedUsers; let i = index">
+          <td class="text-center fw-bold">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+          <td>{{ user.userName || '-' }}</td>
+          <td>{{ user.email || '-' }}</td>
+          <td class="text-center" style="width: 70px; min-width: 70px;">
+            <div class="btn-group btn-group-sm" role="group">
+              <button class="btn btn-outline-primary px-2 py-0" (click)="openEditUser(user)" [title]="'USER_LIST.EDIT' | translate">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-outline-primary px-2 py-0" (click)="deleteUser(user)" [title]="'USER_LIST.DELETE' | translate">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="pagedUsers.length > 0" class="pagination-container mt-2 d-flex justify-content-between align-items-center">
+    <div class="text-muted small ms-2">
+      {{ 'USER_LIST.PAGE_INFO' | translate:{ currentPage: currentPage, totalPages: totalPages, totalCount: totalCount } }}
+    </div>
+    <nav *ngIf="totalPages > 1">
+      <ul class="pagination pagination-sm mb-0">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">&laquo;</button>
+        </li>
+        <li class="page-item" *ngFor="let p of getPageArray()" [class.active]="p === currentPage" [class.disabled]="p === '...'">
+          <button class="page-link" *ngIf="p !== '...'" (click)="goToPage(+p)">{{ p }}</button>
+          <span class="page-link bg-light border-0 text-secondary" *ngIf="p === '...'">&hellip;</span>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">&raquo;</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Edit User Modal -->
+  <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true" #editUserModal>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editUserModalLabel">{{ 'USER_LIST.EDIT_USER' | translate }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form (ngSubmit)="saveUser()">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">{{ 'USER_LIST.NAME' | translate }}</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedUser.userName" name="userName" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ 'USER_LIST.EMAIL' | translate }}</label>
+              <input type="email" class="form-control" [(ngModel)]="selectedUser.email" name="email" required disabled />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ 'USER_LIST.ROLES' | translate }}</label>
+              <div *ngIf="editUserRolesLoading" class="text-muted small">{{ 'USER_LIST.LOADING_ROLES' | translate }}</div>
+              <div *ngIf="!editUserRolesLoading">
+                <ng-container *ngIf="allRoles && allRoles.length; else noRoles">
+                  <div class="row g-2">
+                    <div class="col-3" *ngFor="let role of allRoles; let i = index">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" [id]="'roleCheckbox' + i" [value]="role"
+                          [checked]="selectedUserRoles.includes(role)"
+                          (change)="onRoleCheckboxChange(role, $event)" />
+                        <label class="form-check-label" [for]="'roleCheckbox' + i">{{ role }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #noRoles>
+                  <span class="text-muted">{{ 'USER_LIST.NO_ROLES' | translate }}</span>
+                </ng-template>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ 'USER_LIST.CLAIMS' | translate }}</label>
+              <div *ngIf="editUserClaimsLoading" class="text-muted small">{{ 'USER_LIST.LOADING_CLAIMS' | translate }}</div>
+              <div *ngIf="!editUserClaimsLoading">
+                <ng-container *ngIf="allClaims && allClaims.length; else noClaims">
+                  <div class="row g-2">
+                    <div class="col-3" *ngFor="let claim of allClaims; let i = index">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" [id]="'claimCheckbox' + i" [value]="claim"
+                          [checked]="isClaimSelected(claim)"
+                          (change)="onClaimCheckboxChange(claim, $event)" />
+                        <label class="form-check-label" [for]="'claimCheckbox' + i">
+                          {{ claim.type }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #noClaims>
+                  <span class="text-muted">{{ 'USER_LIST.NO_CLAIMS' | translate }}</span>
+                </ng-template>
+              </div>
+            </div>
+            <!-- Add more fields as needed -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'USER_LIST.CANCEL' | translate }}</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!selectedUser.userName || selectedUser.userName.trim() === ''">{{ 'USER_LIST.SAVE' | translate }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create User Modal (Full Implementation) -->
+  <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true" (show.bs.modal)="openCreateUserModal()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createUserModalLabel">{{ 'USER_LIST.CREATE_USER' | translate }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form #createUserNgForm="ngForm" (ngSubmit)="submitCreateUser()">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">{{ 'USER_LIST.FIRST_NAME' | translate }}</label>
+              <input type="text" class="form-control" [(ngModel)]="createUserForm.firstName" name="firstName" required minlength="2" maxlength="50" #firstName="ngModel" />
+              <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="text-danger small">
+                <div *ngIf="firstName.errors?.['required']">{{ 'USER_LIST.FIRST_NAME_REQUIRED' | translate }}</div>
+                <div *ngIf="firstName.errors?.['minlength']">{{ 'USER_LIST.FIRST_NAME_MINLENGTH' | translate }}</div>
+                <div *ngIf="firstName.errors?.['maxlength']">{{ 'USER_LIST.FIRST_NAME_MAXLENGTH' | translate }}</div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ 'USER_LIST.LAST_NAME' | translate }}</label>
+              <input type="text" class="form-control" [(ngModel)]="createUserForm.lastName" name="lastName" required minlength="2" maxlength="50" #lastName="ngModel" />
+              <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="text-danger small">
+                <div *ngIf="lastName.errors?.['required']">{{ 'USER_LIST.LAST_NAME_REQUIRED' | translate }}</div>
+                <div *ngIf="lastName.errors?.['minlength']">{{ 'USER_LIST.LAST_NAME_MINLENGTH' | translate }}</div>
+                <div *ngIf="lastName.errors?.['maxlength']">{{ 'USER_LIST.LAST_NAME_MAXLENGTH' | translate }}</div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ 'USER_LIST.EMAIL' | translate }}</label>
+              <input type="email" class="form-control" [(ngModel)]="createUserForm.email" name="email" required email #email="ngModel" />
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger small">
+                <div *ngIf="email.errors?.['required']">{{ 'USER_LIST.EMAIL_REQUIRED' | translate }}</div>
+                <div *ngIf="email.errors?.['email']">{{ 'USER_LIST.EMAIL_INVALID' | translate }}</div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ 'USER_LIST.PHONE_NUMBER' | translate }}</label>
+              <input type="text" class="form-control" [(ngModel)]="createUserForm.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ 'USER_LIST.ROLES' | translate }}</label>
+              <div *ngIf="createUserAllRoles && createUserAllRoles.length; else noRoles">
+                <div class="row g-2">
+                  <div class="col-4" *ngFor="let role of createUserAllRoles; let i = index">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" [id]="'createRoleCheckbox' + i" [value]="role"
+                        [checked]="createUserForm.roles.includes(role)"
+                        (change)="onCreateUserRoleChange(role, $event)" />
+                      <label class="form-check-label" [for]="'createRoleCheckbox' + i">{{ role }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!createUserForm.roles.length && createUserForm.roles !== undefined && createUserForm.roles !== null && createUserFormTouched" class="text-danger small mt-1">
+                  {{ 'USER_LIST.AT_LEAST_ONE_ROLE' | translate }}
+                </div>
+              </div>
+              <ng-template #noRoles>
+                <span class="text-muted">{{ 'USER_LIST.NO_ROLES' | translate }}</span>
+              </ng-template>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" [disabled]="createUserLoading">{{ 'USER_LIST.CANCEL' | translate }}</button>
+            <button type="submit" class="btn btn-primary" [disabled]="createUserLoading || !createUserForm.firstName || !createUserForm.lastName || !createUserForm.email || !createUserForm.roles.length">
+              <span *ngIf="createUserLoading" class="spinner-border spinner-border-sm me-2"></span>
+              {{ 'USER_LIST.CREATE' | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && !users.length" class="alert alert-info">{{ 'USER_LIST.NO_USERS_FOUND' | translate }}</div>
+</div>

@@ -1,0 +1,128 @@
+/* Only keep component-specific styles here. All shared table, button, and pagination styles are now in table-theme.css */
+
+/* Add bordered card for modal profile data */
+.profile-details-bordered {
+  border: 2px solid #7f5af0;
+  border-radius: 1.5rem;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 4px 24px rgba(127,90,240,0.08);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.rejection-modal-bg {
+  background: rgba(0,0,0,0.35);
+}
+.rejection-modal .modal-content {
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px rgba(127,90,240,0.13);
+  border: 2px solid #7f5af0;
+  background: #fff;
+}
+.rejection-modal .modal-header {
+  border-bottom: 1px solid #eee;
+  color: #fff;
+  border-top-left-radius: 1.2rem;
+  border-top-right-radius: 1.2rem;
+}
+.profile-modal-header {
+  background: linear-gradient(90deg, #7f5af0 0%, #2cb67d 100%);
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.rejection-modal .modal-title {
+  color: #fff;
+  font-weight: 600;
+}
+.rejection-modal .form-label {
+  color: #7f5af0;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.rejection-modal .form-control {
+  border-radius: 0.7rem;
+  border: 1.5px solid #bdbdbd;
+  font-size: 1.08rem;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 2px 8px rgba(127,90,240,0.06);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.rejection-modal .form-control:focus {
+  border-color: #7f5af0;
+  box-shadow: 0 0 0 2px #7f5af033;
+  background: #fff;
+}
+.rejection-modal .modal-footer {
+  border-top: 1px solid #eee;
+  border-bottom-left-radius: 1.2rem;
+  border-bottom-right-radius: 1.2rem;
+}
+.rejection-modal .btn-danger {
+  background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0.7rem;
+  padding: 0.5rem 1.5rem;
+}
+.rejection-modal .btn-secondary {
+  border-radius: 0.7rem;
+  padding: 0.5rem 1.5rem;
+}
+.profile-avatar {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #2cb67d;
+  box-shadow: 0 2px 8px rgba(44,182,125,0.10);
+  background: #fff;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.profile-avatar-default {
+  border: 2.5px dashed #bdbdbd;
+  background: #f8f9fa;
+}
+.national-id-img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 1.2rem;
+  border: 2px solid #7f5af0;
+  box-shadow: 0 2px 8px rgba(127,90,240,0.10);
+  margin-right: 1.2rem;
+  background: #fff;
+}
+
+/* Modal header direction-aware alignment for details modal */
+:host ::ng-deep .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header {
+  flex-direction: row-reverse !important;
+}
+:host-context([dir="ltr"]) ::ng-deep .modal-header {
+  flex-direction: row !important;
+}
+:host-context([dir="ltr"]) ::ng-deep .modal-title {
+  text-align: left;
+  margin-right: auto;
+  margin-left: 0;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-title {
+  text-align: left;
+  margin-left: 0;
+  margin-right: auto;
+}
+:host ::ng-deep .modal-header .btn-close {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+[dir="rtl"] .modal-header .btn-close {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}

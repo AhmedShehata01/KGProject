@@ -1,0 +1,116 @@
+<nav
+  class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm rounded-bottom glass-navbar"
+>
+  <div class="container-fluid d-flex flex-row justify-content-between align-items-center navbar-row">
+    <div class="navbar-logo d-flex align-items-center">
+      <a
+        class="navbar-brand fw-bold d-flex align-items-center gap-2"
+        routerLink="/dashboard"
+      >
+        <i class="fa-solid fa-cube text-white fs-4"></i>
+        <span>{{ 'NAVBAR.PROJECT_NAME' | translate }}</span>
+      </a>
+    </div>
+    <div class="navbar-icons d-flex align-items-center">
+      <ul class="navbar-nav align-items-center ms-auto gap-3 flex-row mb-0">
+        <!-- Language Dropdown (custom with local flag images) -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle d-flex align-items-center"
+            href="#"
+            id="langDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              [src]="
+                currentLang === 'ar'
+                  ? 'assets/img/country-icons/eg.svg'
+                  : 'assets/img/country-icons/us.svg'
+              "
+              width="22"
+              height="22"
+              style="margin-inline-end: 0.5rem; object-fit: cover; border-radius: 50%;"
+              alt="flag"
+            />
+            <span class="mx-1">{{ currentLang === 'ar' ? 'العربية' : 'English' }}</span>
+          </a>
+          <ul class="dropdown-menu glass-dropdown" aria-labelledby="langDropdown">
+            <li>
+              <a
+                class="dropdown-item d-flex align-items-center"
+                href="#"
+                (click)="onLangChange('en')"
+              >
+                <img
+                  src="assets/img/country-icons/us.svg"
+                  width="22"
+                  height="22"
+                  style="margin-inline-end: 0.5rem; object-fit: cover; border-radius: 50%;"
+                  alt="US flag"
+                />
+
+                English
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item d-flex align-items-center"
+                href="#"
+                (click)="onLangChange('ar')"
+              >
+                <img
+                  src="assets/img/country-icons/eg.svg"
+                  width="22"
+                  height="22"
+                  style="margin-inline-end: 0.5rem; object-fit: cover; border-radius: 50%;"
+                  alt="EG flag"
+                />
+
+                العربية
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- Profile Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle d-flex align-items-center profile-btn"
+            href="#"
+            id="profileDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="fw-bold mx-1">{{ getDisplayName() }}</span>
+          </a>
+          <ul
+            class="dropdown-menu glass-dropdown"
+            [class.dropdown-menu-end]="currentLang === 'en'"
+            [class.dropdown-menu-start]="currentLang === 'ar'"
+            aria-labelledby="profileDropdown"
+          >
+            <li>
+              <a
+                class="dropdown-item d-flex align-items-center"
+                routerLink="/auth/change-password"
+              >
+                <i class="bi bi-key" style="margin-inline-end: 0.5rem;"></i> {{ 'NAVBAR.CHANGE_PASSWORD' | translate }}
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item d-flex align-items-center"
+                (click)="logout()"
+              >
+                <i class="bi bi-box-arrow-right" style="margin-inline-end: 0.5rem;"></i> {{ 'NAVBAR.LOGOUT' | translate }}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

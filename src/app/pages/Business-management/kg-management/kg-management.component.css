@@ -1,0 +1,96 @@
+/* Only keep component-specific styles here. All shared table, button, and pagination styles are now in table-theme.css */
+
+/* Make branch row fields appear in one line and handle overflow */
+.branch-row {
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  gap: 0.5rem;
+}
+.modal-dialog {
+  max-width: 80vw !important;
+  width: 80vw !important;
+}
+/* Compact actions column and icon buttons */
+.table td.text-center[style*="min-width: 80px"] {
+  min-width: 64px !important;
+  width: 64px !important;
+  padding-left: 0.13rem !important;
+  padding-right: 0.13rem !important;
+}
+.btn-group-xs .btn-xs {
+  min-width: 32px !important;
+  height: 32px !important;
+  font-size: 1.08rem !important;
+  padding: 0.18rem 0.32rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.35rem;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-group-xs .btn-xs i {
+  pointer-events: none;
+}
+.btn-group-xs .btn-xs:hover, .btn-group-xs .btn-xs:focus {
+  background: #e9ecef;
+  color: #0d6efd;
+  border-color: #0d6efd;
+}
+.btn-group-xs .btn-xs:active {
+  background: #d0e2ff;
+  color: #0a58ca;
+}
+.btn-group-xs .btn-xs .bi-trash {
+  color: #dc3545;
+}
+.btn-group-xs .btn-xs:hover .bi-trash, .btn-group-xs .btn-xs:focus .bi-trash {
+  color: #a71d2a;
+}
+/* Modal header direction-aware alignment for LTR/RTL */
+:host ::ng-deep .modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-direction: row !important;
+  direction: ltr !important;
+  width: 100% !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header,
+[dir="rtl"] .modal-header {
+  flex-direction: row !important;
+  direction: rtl !important;
+  justify-content: space-between !important;
+}
+:host-context([dir="ltr"]) ::ng-deep .modal-header,
+[dir="ltr"] .modal-header {
+  flex-direction: row !important;
+  direction: ltr !important;
+  justify-content: space-between !important;
+}
+:host ::ng-deep .modal-title,
+:host ::ng-deep .btn-close {
+  display: flex !important;
+  align-items: center !important;
+}
+:host ::ng-deep .modal-title {
+  order: 1;
+  text-align: left !important;
+  margin: 0 !important;
+}
+:host ::ng-deep .btn-close {
+  order: 2;
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header > .modal-title,
+[dir="rtl"] .modal-header > .modal-title {
+  order: 2 !important;
+  text-align: right !important;
+  margin: 0 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header > .btn-close,
+[dir="rtl"] .modal-header > .btn-close {
+  order: 1 !important;
+  margin-right: 0.5rem !important;
+  margin-left: 0 !important;
+}

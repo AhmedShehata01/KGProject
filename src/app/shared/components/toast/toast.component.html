@@ -1,0 +1,13 @@
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200;">
+  <div *ngFor="let toast of toasts" class="toast show mb-2" [ngClass]="{
+    'bg-success text-white': toast.type === 'success',
+    'bg-danger text-white': toast.type === 'error',
+    'bg-info text-dark': toast.type === 'info',
+    'fading': toast.fading
+  }" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex align-items-center">
+      <div class="toast-body flex-grow-1">{{ toast.message }}</div>
+      <button type="button" class="btn-close btn-close-white ms-2 me-1" aria-label="Close" (click)="remove(toast.id)"></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="sidebar-modern p-2 h-100">
+  <ul class="nav flex-column sidebar-list">
+    <ng-container *ngFor="let item of allowedMenuItems">
+      <li class="nav-item mb-2 sidebar-dropdown" *ngIf="item.children && item.children.length > 0; else singleItem">
+        <button class="btn sidebar-dropdown-toggle w-100 d-flex align-items-center justify-content-between" type="button"
+          (click)="toggle(item.label)"
+          [attr.aria-expanded]="isOpen(item.label)">
+          <span class="d-flex align-items-center">
+            <span class="me-2"><i class="bi" [ngClass]="item.icon"></i></span> {{ item.label }}
+          </span>
+          <i class="bi" [ngClass]="{
+            'bi-chevron-down': isOpen(item.label),
+            'bi-chevron-right': !isOpen(item.label),
+            'arrow-icon': true
+          }"></i>
+        </button>
+        <div class="sidebar-dropdown-menu" [class.show]="isOpen(item.label)">
+          <a *ngFor="let child of item.children"
+             class="dropdown-item nav-link"
+             [routerLink]="child.route"
+             routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            <i class="bi me-2" [ngClass]="child.icon"></i> {{ child.label }}
+          </a>
+        </div>
+      </li>
+      <ng-template #singleItem>
+        <li class="nav-item mb-2">
+          <a class="nav-link d-flex align-items-center"
+             [routerLink]="item.route"
+             routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            <i class="bi me-2" [ngClass]="item.icon"></i> {{ item.label }}
+          </a>
+        </li>
+      </ng-template>
+    </ng-container>
+  </ul>
+</div>

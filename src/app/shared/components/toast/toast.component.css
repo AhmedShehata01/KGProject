@@ -1,0 +1,30 @@
+.toast-container {
+  z-index: 1200;
+}
+.toast {
+  min-width: 260px;
+  max-width: 400px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  border-radius: 0.5rem;
+  opacity: 0.98;
+  font-size: 1rem;
+  transition: opacity 1s;
+}
+.toast.fading {
+  opacity: 0;
+}
+.toast .btn-close {
+  filter: invert(1);
+}
+.toast.bg-info {
+  background: #e3f6fc !important;
+  color: #0c5460 !important;
+}
+.toast.bg-success {
+  background: #2cb67d !important;
+  color: #fff !important;
+}
+.toast.bg-danger {
+  background: #ef233c !important;
+  color: #fff !important;
+}

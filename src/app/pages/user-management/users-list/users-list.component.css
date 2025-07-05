@@ -1,0 +1,79 @@
+/* Only keep component-specific styles here. All shared table, button, and pagination styles are now in table-theme.css */
+
+/* Users List specific styles (currently none) */
+
+/* Fix checkbox and label alignment for RTL/LTR in role/claim lists */
+:host ::ng-deep .form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+:host-context([dir="rtl"]) .form-check {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+:host-context([dir="rtl"]) .form-check-label {
+  margin-right: 0.5rem;
+  margin-left: 0;
+}
+:host-context([dir="ltr"]) .form-check-label {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+/* Modal header justify-content-between for both LTR and RTL */
+:host ::ng-deep .modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-direction: row !important;
+  direction: ltr !important;
+  width: 100% !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header,
+[dir="rtl"] .modal-header {
+  flex-direction: row !important;
+  direction: rtl !important;
+  justify-content: space-between !important;
+}
+:host-context([dir="ltr"]) ::ng-deep .modal-header,
+[dir="ltr"] .modal-header {
+  flex-direction: row !important;
+  direction: ltr !important;
+  justify-content: space-between !important;
+}
+:host ::ng-deep .modal-title,
+:host ::ng-deep .btn-close {
+  display: flex !important;
+  align-items: center !important;
+}
+:host ::ng-deep .modal-title {
+  order: 1;
+  text-align: left !important;
+  margin: 0 !important;
+}
+:host ::ng-deep .btn-close {
+  order: 2;
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-title,
+[dir="rtl"] .modal-title {
+  order: 2 !important;
+  text-align: right !important;
+  margin: 0 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .btn-close,
+[dir="rtl"] .btn-close {
+  order: 1 !important;
+  margin-right: 0.5rem !important;
+  margin-left: 0 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header > .modal-title,
+[dir="rtl"] .modal-header > .modal-title {
+  order: 2 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header > .btn-close,
+[dir="rtl"] .modal-header > .btn-close {
+  order: 1 !important;
+}

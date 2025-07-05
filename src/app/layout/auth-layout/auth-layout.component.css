@@ -1,0 +1,22 @@
+.auth-container {
+  background: #f8f9fa;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 8px;
+}
+
+.auth-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
+}
+
+.auth-glass-card {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}

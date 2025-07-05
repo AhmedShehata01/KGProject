@@ -1,0 +1,82 @@
+/* Only keep component-specific styles here. All shared table, button, and pagination styles are now in table-theme.css */
+
+.spinner-border {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.alert-info {
+  background: rgba(44,182,125,0.08);
+  color: #2cb67d;
+  border: none;
+  border-radius: 0.85rem;
+}
+.alert-danger {
+  border-radius: 0.85rem;
+}
+/* Make branch row fields appear in one line and handle overflow */
+.branch-row {
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  gap: 0.5rem;
+}
+.modal-dialog {
+  max-width: 80vw !important;
+  width: 80vw !important;
+}
+.modal-header .btn-close {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+[dir="rtl"] .modal-header .btn-close {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+/* Modal header direction-aware alignment for LTR/RTL */
+:host ::ng-deep .modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-direction: row !important;
+  direction: ltr !important;
+  width: 100% !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header,
+[dir="rtl"] .modal-header {
+  flex-direction: row !important;
+  direction: rtl !important;
+  justify-content: space-between !important;
+}
+:host-context([dir="ltr"]) ::ng-deep .modal-header,
+[dir="ltr"] .modal-header {
+  flex-direction: row !important;
+  direction: ltr !important;
+  justify-content: space-between !important;
+}
+:host ::ng-deep .modal-title,
+:host ::ng-deep .btn-close {
+  display: flex !important;
+  align-items: center !important;
+}
+:host ::ng-deep .modal-title {
+  order: 1;
+  text-align: left !important;
+  margin: 0 !important;
+}
+:host ::ng-deep .btn-close {
+  order: 2;
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header > .modal-title,
+[dir="rtl"] .modal-header > .modal-title {
+  order: 2 !important;
+  text-align: right !important;
+  margin: 0 !important;
+}
+:host-context([dir="rtl"]) ::ng-deep .modal-header > .btn-close,
+[dir="rtl"] .modal-header > .btn-close {
+  order: 1 !important;
+  margin-right: 0.5rem !important;
+  margin-left: 0 !important;
+}
