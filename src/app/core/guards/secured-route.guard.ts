@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 export class SecuredRouteGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
+  
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const path = state.url.split('?')[0];
     const userRoles = this.auth.getRoles();
