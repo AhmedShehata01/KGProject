@@ -9,6 +9,7 @@ import { ApiResponse } from '../interface/api-response.interfaces';
 export class ActivityLogService {
   private apiUrl = environment.apiBaseUrl + '/api/activity-log';
 
+  
   constructor(private http: HttpClient) {}
 
   getEntityHistory(entityName: string, entityId: string): Observable<ApiResponse<ActivityLogViewDTO[] | string>> {
